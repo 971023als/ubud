@@ -37,7 +37,6 @@ if [ $? -eq 0 ]; then
   echo "/dev directory removed successfully"
 else
   echo "/dev Directory Removal Failed"
-  exit 1
 fi
 
 # Copy the backup directory to /dev
@@ -48,7 +47,6 @@ if [ $? -eq 0 ]; then
   echo "$backup_dir directory copied to /dev successfully"
 else
   echo "$backup_dir Directory Copy Failed"
-  exit 1
 fi
  
 cat $result
