@@ -4,10 +4,7 @@
 
 . function.sh
 
-<<<<<<< HEAD
  
-=======
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 TMP2=/tmp/tmp1
 
@@ -34,7 +31,6 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-<<<<<<< HEAD
 # Backup files
 cp /etc/passwd /etc/passwd.bak
 
@@ -53,21 +49,6 @@ for user in $user_list; do
     INFO "user $user 셸을 /bin/false로 설정"
   fi
 done
-=======
-
-# Read the original shells of the users from the log file
-while read -r line; do
-  user=$(echo "$line" | awk '{print $1}')
-  original_shell=$(echo "$line" | awk '{print $3}')
-
-  # Restore the original shell of the user
-  sudo usermod -s "$original_shell" "$user"
-  INFO "Restored user $user shell to $original_shell"
-done < "$TMP1"
-
-
-
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
  
 

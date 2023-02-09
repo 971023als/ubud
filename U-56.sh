@@ -3,10 +3,6 @@
  
 
 . function.sh
-<<<<<<< HEAD
-=======
- 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
  
 
@@ -24,7 +20,6 @@ EOF
 
 BAR
 
-<<<<<<< HEAD
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
@@ -39,27 +34,6 @@ if ! grep -q "UMASK=022" /etc/profile; then
 else
   OK "UMASK가 /etc/profile에 이미 있습니다."
 fi
-=======
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
-
-# Backup the original /etc/profile file
-sudo cp /etc/profile /etc/profile.bak
-
-# Restore the original /etc/profile file
-sudo cp /etc/profile.bak /etc/profile
-
-echo "The file has been restored to its original state."
-
-# Remove the backup file
-sudo rm -rf /etc/profile.bak
-
-
-
-
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 
 cat $result

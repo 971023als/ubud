@@ -3,11 +3,7 @@
  
 
 . function.sh
-<<<<<<< HEAD
  
-=======
-
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
  
 
 BAR
@@ -24,7 +20,6 @@ EOF
 
 BAR
 
-<<<<<<< HEAD
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
@@ -40,26 +35,6 @@ for user in $(awk -F: '{ if ($3 >= 1000 && $3 <= 60000) print $1}' /etc/passwd);
   fi
 done
 
-=======
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
-
-
-
-for user in $(awk -F: '{ if ($3 >= 1000 && $3 <= 60000) print $1}' /etc/passwd); do
-  if [ -d /home/$user ]; then
-    usermod -d /$user $user
-  fi
-done
-
-echo "The home directories for user accounts have been restored to their original state."
-
-
-
-
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo
