@@ -1,7 +1,16 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 . function.sh
 
+=======
+ 
+
+. function.sh
+
+ 
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 BAR
 
 CODE [U-57] 홈 디렉터리 소유자 및 권한
@@ -16,6 +25,7 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
 # Restore backup files
 cp /etc/passwd /etc/passwd.bak
 
@@ -43,6 +53,29 @@ while read home_dir; do
     sudo chmod g+w,o+w "$home_dir"
   done < <(ls -ld "$home_dir")
 done < <(cat /etc/passwd | awk -F ':' '{print $6}')
+=======
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1  
+
+
+
+for user in $(awk -F: '{ if ($3 >= 1000 && $3 <= 60000) print $1}' /etc/passwd); do
+  if [ -d /home/$user ]; then
+    usermod -d /$user $user
+  fi
+done
+
+echo "The home directories for user accounts have been restored to their original state."
+
+
+
+
+
+
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 cat $result
 

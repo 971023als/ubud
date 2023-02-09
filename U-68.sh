@@ -5,10 +5,13 @@
 . function.sh
 
 
+<<<<<<< HEAD
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1   
 
+=======
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 BAR
 
 CODE [U-68] 로그온 시 경고 메시지 제공
@@ -25,6 +28,7 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
+<<<<<<< HEAD
 > $TMP1 
 
 sudo cp /etc/motd /etc/motd.bak
@@ -40,11 +44,28 @@ for file in "${files[@]}"; do
     INFO "$file이 존재하지 않습니다."
   else
     OK "$file이 존재합니다."
+=======
+> $TMP1
+
+
+
+# File Definitions
+files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmail.cf" "/etc/named.conf")
+
+# Revert the changes made to the logon message
+for file in "${files[@]}"; do
+  if [ -e "$file" ]; then
+    echo "" > "$file"
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
   fi
 done
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo

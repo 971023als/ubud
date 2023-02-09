@@ -6,6 +6,10 @@
 
  
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 TMP2=/tmp/tmp1
 
 TMP3=/tmp/tmp2
@@ -28,11 +32,15 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+<<<<<<< HEAD
 # Backup files
 cp /etc/group /etc/group.bak
 
@@ -42,10 +50,17 @@ keep_groups=("root" "sudo" "sys" "adm" "wheel"
 "daemon" "bin" "lp" "dbus" "rpc" "rpcuser" "haldaemon" 
 "apache" "postfix" "gdm" "adiosl" "mysql" "cubrid"
  "messagebus" "syslog" "avahi" "whoopsie"
+=======
+necessary_groups=("root" "sudo" "sys" "adm" "wheel"
+"daemon" "bin" "lp" "dbus" "rpc" "rpcuser" "haldaemon"
+"apache" "postfix" "gdm" "adiosl" "mysql" "cubrid"
+"messagebus" "syslog" "avahi" "whoopsie"
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 "colord" "systemd-network" "systemd-resolve"
 "systemd-timesync" "mysql" "user"
 "www-data" "sync")
 
+<<<<<<< HEAD
 # 모든 그룹 목록 가져오기
 all_groups=$(cut -d: -f1 /etc/group)
 
@@ -54,10 +69,26 @@ for group in $all_groups; do
   if ! [[ "${keep_groups[@]}" =~ "$group" ]]; then
     # 유지할 그룹 목록에 없는 그룹 제거
     sudo groupdel "$group"
+=======
+# Read the necessary groups from the log file
+original_groups=$(cat "$TMP1")
+
+# Add back the groups that were deleted
+for group in $original_groups; do
+  if ! echo "${necessary_groups[@]}" | grep -wq "$group"; then
+    groupadd "$group"
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
   fi
 done
 
 
+<<<<<<< HEAD
+=======
+
+
+ 
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo

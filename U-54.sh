@@ -5,6 +5,10 @@
 . function.sh
 
  
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
  
 
 BAR
@@ -21,10 +25,15 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
+<<<<<<< HEAD
 # Backup files
 cp /etc/profile /etc/profile.bak
 
@@ -35,12 +44,25 @@ if ! grep -q "TMOUT=600" /etc/profile; then
   INFO "/etc/profile에 TMOUT가 추가되었습니다."
 else
   OK "TMOUT가 /etc/profile에 이미 있습니다."
+=======
+# Check if TMOUT exists in /etc/profile
+if grep -q "TMOUT=600" /etc/profile; then
+  # Remove the line containing TMOUT from /etc/profile
+  sed -i '/TMOUT=600/d' /etc/profile
+  sed -i '/export TMOUT/d' /etc/profile
+  INFO "Removed TMOUT from /etc/profile."
+else
+  OK "TMOUT was not found in /etc/profile."
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 fi
 
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo

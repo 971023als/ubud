@@ -22,6 +22,7 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
+<<<<<<< HEAD
 > $TMP1 
 
 
@@ -36,6 +37,19 @@ sudo chmod 4750 /usr/bin/at
 sudo chown root /etc/at.deny
 
 sudo chmod 640 /etc/at.deny
+=======
+> $TMP1
+
+
+sudo chmod 2755 /usr/bin/at
+
+sudo chown root:root /etc/at.deny
+
+sudo chmod 644 /etc/at.deny
+
+
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 cat $result
 

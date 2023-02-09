@@ -6,8 +6,11 @@
 
  
 
+<<<<<<< HEAD
  
 
+=======
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 BAR
 
 CODE [U-59] 숨겨진 파일 및 디렉터리 검색 및 제거
@@ -22,6 +25,7 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
 # 숨김 파일 및 디렉토리 정의
 hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
 hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
@@ -42,6 +46,34 @@ for dir in $hidden_dirs; do
     sudo rm -r $dir
   fi
 done
+=======
+
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1 
+
+
+
+# Define the location of backup files
+backup_files_dir="$HOME/hidden_files_backup"
+
+# Check if the backup directory exists
+if [ ! -d "$backup_files_dir" ]; then
+  echo "Backup directory does not exist, no files to restore"
+  exit 1
+fi
+
+# Restore hidden files and directories
+for file in $(ls "$backup_files_dir"); do
+  cp "$backup_files_dir/$file" "$file"
+done
+
+# Remove the backup directory
+rm -rf "$backup_files_dir"
+
+echo "Original state has been restored successfully."
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 
 

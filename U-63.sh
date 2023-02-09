@@ -19,6 +19,7 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
  
 TMP1=`SCRIPTNAME`.log
 
@@ -35,6 +36,31 @@ sudo chown root:root /etc/vsftpd/ftpusers
 sudo chmod 640 /etc/vsftpd/ftpusers
 
 
+=======
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1
+
+
+# Get the original owner and permission settings of the ftpusers file
+original_owner=$(stat -c "%U:%G" /etc/vsftpd/ftpusers.bak)
+original_permissions=$(stat -c "%a" /etc/vsftpd/ftpusers.bak)
+
+# Change the owner of the ftpusers file back to its original value
+sudo chown $original_owner /etc/vsftpd/ftpusers
+
+# Change the permissions of the ftpusers file back to its original value
+sudo chmod $original_permissions /etc/vsftpd/ftpusers
+
+# Check the owner and permission settings of the ftpusers file
+current_owner=$(stat -c "%U:%G" /etc/vsftpd/ftpusers)
+current_permissions=$(stat -c "%a" /etc/vsftpd/ftpusers)
+if [ "$current_owner" == "$original_owner" ] && [ "$current_permissions" == "$original_permissions" ]; then
+OK "The owner and permission settings of the ftpusers file are set to their original values."
+else
+INFO "The owner and permission settings of the ftpusers file cannot be set to their original values."
+fi
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 cat $result
 

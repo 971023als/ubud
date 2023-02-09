@@ -19,11 +19,24 @@ EOF
 
 BAR
 
+<<<<<<< HEAD
 # snmpd 구성 파일 백업
 sudo cp /etc/sudiod.conf /etc/sudiod.conf.bak
 
 # snmpd 서비스 중지
 sudo service snmpd stop
+=======
+TMP1=`SCRIPTNAME`.log
+
+> $TMP1
+
+
+
+# Start SNMP service
+sudo service snmpd start
+OK "Started SNMP service"
+
+>>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 cat $result
 
