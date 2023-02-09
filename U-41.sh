@@ -1,9 +1,6 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
  
 TMP1=`SCRIPTNAME`.log
 
@@ -23,7 +20,6 @@ cat << EOF >> $result
 EOF
 
 BAR
-
 
 # Create a backup of apache2.conf
 sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bak

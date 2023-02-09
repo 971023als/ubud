@@ -20,8 +20,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Start DNS service
-service named start
+service named restart
 
 
 cat $result

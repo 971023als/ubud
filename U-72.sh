@@ -24,15 +24,14 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
+# rsyslog 서비스 중지
+sudo service rsyslog stop
 
+# 원본 파일 복원
+sudo mv /etc/rsyslog.conf.bak /etc/rsyslog.conf
 
-# # Stop the rsyslog service
-service rsyslog stop
-
-# # Restore the original file
-mv /etc/rsyslog.conf.bak /etc/rsyslog.conf
-
-# # Restart the rsyslog service
+# rsyslog 서비스 다시 시작
+sudo service rsyslog restartice
 service rsyslog restart
 
 

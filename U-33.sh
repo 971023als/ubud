@@ -27,9 +27,6 @@ for PID in $PIDs; do
     kill -9 $PID
 done
 
-
-
-
 cat $result
 
 echo ; echo
