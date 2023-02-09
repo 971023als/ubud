@@ -20,33 +20,15 @@ BAR
 cp /etc/dfs/dfstab /etc/dfs/dfstab.bak
 cp /etc/exports /etc/exports.bak
 
-# dfstab 파일이 있는지 확인합니다
-if [ -f "/etc/dfs/dfstab" ]; then
-  # dfstab에서 모든 공유 제거
-  > "/etc/dfs/dfstab"
-  OK "공유가 /etc/dfs/dfstab에서 제거되었습니다."
-elif [ -f "/etc/exports" ]; then
-  # 내보내기에서 모든 공유 제거
-  > "/etc/exports"
-  OK "공유가 /etc/exports에서 제거되었습니다."
-else
-  INFO "공유 파일을 찾을 수 없습니다."
+# 사용하지 않도록 설정된 NFS 시작 스크립트의 이름을 원래 이름으로 변경합니다
+if [ -f "/etc/rc.d/rc2.d/_S60nfs" ]; then
+sudo mv /etc/rc.d/rc2.d/_S60nfs /etc/rc.d/rc2.d/S60nfs
 fi
 
-
-services=("nfsd" "statd" "mountd")
-
-for service in "${services[@]}"; do
-  service "$service" stop
-  if [ $? -eq 0 ]; then
-    OK "$서비스가 중지되었습니다."
-  else
-    INFO "$service를 중지할 수 없습니다."
-  fi
-done
-
-
-
+# NFS 관련 프로세스 시작
+/usr/sbin/nfsd restart
+/usr/sbin/statd restart
+/usr/sbin/lockd restart
 
 cat $result
 
