@@ -5,13 +5,6 @@
 . function.sh
 
 
-<<<<<<< HEAD
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1   
-
-=======
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 BAR
 
 CODE [U-68] 로그온 시 경고 메시지 제공
@@ -28,23 +21,6 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
-<<<<<<< HEAD
-> $TMP1 
-
-sudo cp /etc/motd /etc/motd.bak
-sudo cp /etc/issue.net /etc/issue.net.bak
-sudo cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
-sudo cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf.bak
-sudo cp /etc/named.conf /etc/named.conf.bak
-
-files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmail.cf" "/etc/named.conf")
-
-for file in "${files[@]}"; do
-  if [ ! -e "$file" ]; then
-    INFO "$file이 존재하지 않습니다."
-  else
-    OK "$file이 존재합니다."
-=======
 > $TMP1
 
 
@@ -56,16 +32,12 @@ files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmai
 for file in "${files[@]}"; do
   if [ -e "$file" ]; then
     echo "" > "$file"
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
   fi
 done
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo

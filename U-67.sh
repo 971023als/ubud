@@ -4,10 +4,7 @@
 
 . function.sh
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 BAR
 
 CODE [U-67] SNMP 서비스 Community String의 복잡성 설정
@@ -25,18 +22,6 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
-<<<<<<< HEAD
-> $TMP1 
-
-
-sudo cp /etc/snmp/snmpd.conf /etc/snmp/snmpd.conf.bak
-
-# 파일 정의
-file="/etc/snmp/snmpd.conf"
-
-# "get-community-name: public / set-commnunity-name : private"을 "get-community-name: min / set-commnunity-name: min"로 바꿉니다
-sed -i 's/get-community-name: public/ set-community-name: private/g; s/get-community-name: min/ set-community-name: min/g' $file
-=======
 > $TMP1
 
 
@@ -65,7 +50,6 @@ fi
 # Clean up backup directory
 rm -rf "$backup_dir"
 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 
 cat $result

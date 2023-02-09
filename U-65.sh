@@ -22,22 +22,6 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
-<<<<<<< HEAD
-> $TMP1 
-
-
-# Backup the /usr/bin/at file
-sudo cp /usr/bin/at /usr/bin/at.bak
-
-# Backup the /etc/at.deny file
-sudo cp /etc/at.deny /etc/at.deny.bak
-
-sudo chmod 4750 /usr/bin/at
-
-sudo chown root /etc/at.deny
-
-sudo chmod 640 /etc/at.deny
-=======
 > $TMP1
 
 
@@ -49,7 +33,6 @@ sudo chmod 644 /etc/at.deny
 
 
 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 
 cat $result
 

@@ -3,10 +3,6 @@
  
 
 . function.sh
-<<<<<<< HEAD
-
-=======
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
  
 
 BAR
@@ -23,17 +19,6 @@ EOF
 
 BAR
 
-<<<<<<< HEAD
-
-TMP1=`SCRIPTNAME`.log
-
-> $TMP1 
-
-sudo cp /etc/exports /etc/exports.bak
-
-filename="/etc/exports"
-
-=======
 TMP1=`SCRIPTNAME`.log
 
 > $TMP1
@@ -43,15 +28,11 @@ TMP1=`SCRIPTNAME`.log
 filename="/etc/exports"
 
 # Revert the changes made to the NFS access control settings file
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 sudo chown root "$filename"
 sudo chmod 644 "$filename"
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 27518c740bae359b63b4e44e1d4246fd60018ccf
 cat $result
 
 echo ; echo 
