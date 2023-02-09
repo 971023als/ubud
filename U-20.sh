@@ -14,25 +14,32 @@ cat << EOF >> $result
 
 EOF
 
-BAR
-
-TMP1=`SCRIPTNAME`.log
-
->$TMP1  
+BAR 
 
 # vsftpd 구성 파일 백업
 cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
 
-# 익명 FTP 연결 사용 안 함
-sed -i 's/^anonymous_enable=YES/anonymous_enable=NO/' /etc/vsftpd.conf
+# FTP 사용자 복원
+sudo useradd ftp
 
-# FTP 서비스를 다시 시작하여 변경 사항 적용
-service vsftpd restart 
-if [ "$?" -ne 0 ]; then
-  INFO "FTP 서비스를 다시 시작하지 못했습니다."
+# vsftpd.conf 파일의 경로 설정
+vsftpd_conf_file="/etc/vsftpd.conf"
+
+# vsftpd.conf 파일이 있는지 확인합니다.
+if [ -f $vsftpd_conf_file ]; then
+  # "anonymous_enable=NO" 행을 제거합니다(있는 경우)
+  sed -i '/^anonymous_enable=NO/d' $vsftpd_conf_file
 else
-  OK "FTP 서비스가 다시 시작되었습니다."
+  # 파일을 찾을 수 없음
+  INFO " $vsftpd_conf_file 파일을 찾을 수 없습니다."
 fi
+
+# 백업에서 원래 vsftpd.conf 파일 복원
+if [ -f $vsftpd_conf_file.bak ]; then
+  mv $vsftpd_conf_file.bak $vsftpd_conf_file
+fi
+
+INFO "익명 FTP가 원래 상태로 복원되었습니다."
 
 
 
