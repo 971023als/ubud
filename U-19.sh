@@ -17,19 +17,17 @@ EOF
 BAR
 
 
-# Backup files
-cp /etc/xinetd.d/finger /etc/xinetd.d/finger.bak
+# 핑거 서비스 구성 파일의 변경 사항을 제거합니다
+if [ -f /etc/xinetd.d/finger ]; then
+  sudo rm /etc/xinetd.d/finger
+fi
 
+# 원래 핑거 서비스 구성 파일 복원
+if [ -f /etc/xinetd.d/finger.bak ]; then
+  sudo mv /etc/xinetd.d/finger.bak /etc/xinetd.d/finger
+fi
 
-# finger 파일 설정
-echo "service finger
-{
-socket_type = stream
-wait = no
-user = nobody
-server = /usr/sbin/in.fingerd
-disable = yes
-}" > /etc/xinetd.d/finger
+INFO "핑거 서비스가 원래 상태로 복구되었습니다"
 
 
 cat $result
