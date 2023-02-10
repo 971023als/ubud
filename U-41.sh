@@ -1,6 +1,9 @@
 #!/bin/bash
 
+ 
+
 . function.sh
+
  
 TMP1=`SCRIPTNAME`.log
 
@@ -21,8 +24,9 @@ EOF
 
 BAR
 
-# Create a backup of apache2.conf
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bak
+
+# Restore backup files
+cp /etc/apache2/sites-available/000-default.conf.bak /etc/apache2/sites-available/000-default.conf
 
 # 확인할 Apache2 Document Root 디렉토리 설정
 config_file="/etc/apache2/sites-available/000-default.conf"

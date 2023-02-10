@@ -20,14 +20,8 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Backup files
-cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
-
-# Apache 구성 파일 정의
-file="/etc/apache2/apache2.conf"
-
-# "Options FollowSymLinks"을 "Options"로 바꿉니다
-sed -i 's/Options FollowSymLinks/Options/g' $file
+# Restore backup files
+cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
 
 
 

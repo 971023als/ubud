@@ -20,19 +20,12 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# Restore backup files
+mv /etc/hosts.allow.bak /etc/hosts.allow
+mv /etc/hosts.deny.bak /etc/hosts.deny
 
-# Backup files
-cp /etc/hosts.allow /etc/hosts.allow.bak
-cp /etc/hosts.deny /etc/hosts.deny.bak
-
-
-# 포트 22(SSH)에서 192.168.0.1로부터의 연결 허용
-echo "sshd: 192.168.0.1" >> /etc/hosts.allow # ex)sshd : 192.168.0.148, 192.168.0.6
-
-# 포트 22(SSH)의 다른 모든 IP 주소에서 연결 거부
-echo "sshd: ALL" >> /etc/hosts.deny # ex)ALL:ALL
-
-
+# Confirm the restore
+echo "The backup files have been restored."
 
 cat $result
 

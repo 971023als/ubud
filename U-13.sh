@@ -17,23 +17,15 @@ EOF
 
 BAR
 
-# Restore original permissions for specified files
-restore_permissions() {
-filename=$1
-original_permission=$(stat -c "%a" "$filename")
-sudo chmod "$original_permission" "$filename"
-INFO "다음에 대한 원래 사용 권한 복원 $filename"
-}
 
-# Restore original permissions for all specified files
-restore_permissions .profile
-restore_permissions .kshrc
-restore_permissions .cshrc
-restore_permissions .bashrc
-restore_permissions .bash_profile
-restore_permissions .login
-restore_permissions .exrc
-restore_permissions .netrc
+# Restore system-auth file
+cp /bin/ping.bak /bin/ping 
+cp /usr/bin/passwd.bak /usr/bin/passwd 
+cp /usr/bin/sudo.bak /usr/bin/sudo 
+
+
+
+
 
 cat $result
 

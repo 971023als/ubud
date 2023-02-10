@@ -1,6 +1,10 @@
 #!/bin/bash
 
+ 
+
 . function.sh
+
+ 
 
 BAR
 
@@ -20,28 +24,17 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 백업 디렉터리 정의
-backup_dir="/dev_backup"
+# Find files in /dev directory without major or minor number
+find /dev -type f -exec ls -l {} \; | awk '$5 == "0" && $6 == "0" {print $9}' |
+while read file; do
+    # Confirm before deleting
+    read -p "Delete $file? [y/n] " confirm
+    if [ "$confirm" == "y" ]; then
+        rm -f "$file"
+    fi
+done
+ 
 
-# 현재 /dev 디렉토리 제거
-rm -rf /dev
-
-# 제거가 성공적이었는지 확인하십시오
-if [ $? -eq 0 ]; then
-  OK "/dev 디렉토리가 제거되었습니다."
-else
-  INFO "/dev 디렉토리 제거 실패"
-fi
-
-# 백업 디렉토리를 /dev에 복사합니다
-sudo cp -R $backup_dir /dev
-
-# 복사가 성공했는지 확인합니다
-if [ $? -eq 0 ]; then
-  OK "$backup_dir 디렉토리가 /dev에 복사되었습니다."
-else
-  WARN "$backup_dir 디렉토리 복사 실패"
-fi
  
 cat $result
 

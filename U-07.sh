@@ -15,8 +15,8 @@ cat << EOF >> $result
 
 EOF
 
-# Backup files
-cp /etc/passwd /etc/passwd.bak
+# Restore system-auth file
+cp /etc/passwd.bak /etc/passwd 
 
 BAR
 # 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경

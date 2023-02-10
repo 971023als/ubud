@@ -19,22 +19,25 @@ BAR
 # Save Current Date and Time
 current_date_time=$(date +"%Y-%m-%d %T")
 
-# Make a backup of the /etc/passwd file
-cp /etc/passwd /etc/passwd_$current_date_time
+# Get the backup file name
+backup_file_name=`ls /etc/passwd_* | tail -n 1`
 
-# Gets the user name of an account with the same UID as the root account
-username=$(awk -F: '$3==0{print $1}' /etc/passwd)
+# Check if the backup file exists
+if [ -f "$backup_file_name" ]; then
+  # Restore the /etc/passwd file from the backup
+  sudo cp $backup_file_name /etc/passwd
 
-if [ -n "$username" ]; then
-  # UID Array
-  uids=(2023 2024 2025)
+  # Get the username of the account with the same UID as the root account
+  username=$(awk -F: '$3==0{print $1}' /etc/passwd)
 
-  for uid in "${uids[@]}"; do
-    # Change the UID of an account
-    sudo usermod -u $uid $username
-  done
+  if [ -n "$username" ]; then
+    # Reset the UID of the account to 0
+    sudo usermod -u 0 $username
+  else
+    OK "An account with the same UID as the root account cannot be found"
+  fi
 else
-  OK "An account with the same UID as the root account cannot be found"
+  OK "Backup file not found"
 fi
 
 

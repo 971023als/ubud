@@ -19,11 +19,12 @@ EOF
 
 BAR
 
-# snmpd 구성 파일 백업
-sudo cp /etc/sudiod.conf /etc/sudiod.conf.bak
 
-# snmpd 서비스 중지
-sudo service snmpd stop
+# Restore the snmpd configuration file
+sudo cp /etc/snmp/snmpd.conf.bak /etc/snmp/snmpd.conf
+
+# Start the snmpd service
+sudo service snmpd start
 
 cat $result
 

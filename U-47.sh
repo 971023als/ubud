@@ -20,15 +20,13 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Get the current date and time to use as the backup file name
-current_date_time="$(date +%Y-%m-%d_%H-%M-%S)"
+# Get the most recent backup file
+backup_file=$(ls -t /etc/login.defs_backup* | head -n 1)
 
-# Create the backup file with the current date and time in the file name
-sudo cp /etc/login.defs "/etc/login.defs_backup_$current_date_time"
+# Restore the original file from the backup
+sudo cp "$backup_file" /etc/login.defs
 
-echo "Backup of /etc/login.defs created at /etc/login.defs_backup_$current_date_time"
-
-sudo sed -i "s/^PASS_MAX_DAYS.*/PASS_MAX_DAYS\ 90/" /etc/login.defs
+echo "Original file restored from $backup_file"
 
 
 cat $result

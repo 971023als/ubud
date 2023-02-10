@@ -3,7 +3,6 @@
  
 
 . function.sh
-
  
 
 BAR
@@ -26,23 +25,7 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 # 원본 httpd.conf 백업
-cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
-
-# 원래 서버 토큰 복원 지시문
-grep -q "^ServerTokens" /etc/apache2/apache2.conf.bak
-if [ $? -eq 0 ]; then
-  sed -i 's/^ServerTokens.*/ServerTokens /' /etc/apache2/apache2.conf
-else
-  sed -i '/^ServerTokens.*/d' /etc/apache2/apache2.conf
-fi
-
-# 원래 서버 서명 지시문 복원
-grep -q "^ServerSignature" /etc/apache2/apache2.conf.bak
-if [ $? -eq 0 ]; then
-  sed -i 's/^ServerSignature.*/ServerSignature /' /etc/apache2/apache2.conf
-else
-  sed -i '/^ServerSignature.*/d' /etc/apache2/apache2.conf
-fi
+cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
 
 
 

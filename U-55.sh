@@ -25,11 +25,9 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1
 
-
 # Restore backup files
-cp /etc/hosts.lpd /etc/hosts.lpd.bak
+cp /etc/hosts.lpd.bak /etc/hosts.lpd
 
-sudo rm -rf /etc/hosts.lpd
 
 cat $result
 

@@ -3,7 +3,6 @@
  
 
 . function.sh
-
  
 
 BAR
@@ -22,13 +21,25 @@ BAR
 
 TMP1=`SCRIPTNAME`.log
 
-> $TMP1
+> $TMP1 
 
-# 원본 /etc/ssh/sshd_config 파일 백업
-sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 
-# 원본 /etc/ssh/sshd_config 파일 복원
-sudo cp /etc/ssh/sshd_config.bak /etc/ssh/sshd_config
+ftp_user="ftpuser"
+
+if ! grep "^$ftp_user" /etc/passwd > /dev/null 2>&1; then
+  sudo useradd $ftp_user
+fi
+
+if [ "$(id -u)" == "0" ]; then
+  if [ "$(grep "^ftp" /etc/passwd | cut -d: -f1)" == "root" ]; then
+    sudo usermod -s /usr/sbin/nologin root
+    OK "루트 FTP 액세스가 비활성화되었습니다."
+  fi
+  sudo usermod -s /bin/false $ftp_user
+  OK "FTP 액세스가 $ftp_user 계정으로 제한되었습니다."
+else
+  WARN "루트로 실행해야 합니다."
+fi
 
 
 

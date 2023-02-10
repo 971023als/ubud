@@ -16,19 +16,38 @@ EOF
 
 BAR
 
-# Backup NFS configuration files
-cp /etc/dfs/dfstab /etc/dfs/dfstab.bak
-cp /etc/exports /etc/exports.bak
 
-# 사용하지 않도록 설정된 NFS 시작 스크립트의 이름을 원래 이름으로 변경합니다
-if [ -f "/etc/rc.d/rc2.d/_S60nfs" ]; then
-sudo mv /etc/rc.d/rc2.d/_S60nfs /etc/rc.d/rc2.d/S60nfs
+
+# Check if NFS service is installed
+if ! command -v nfsd &> /dev/null; then
+  echo "NFS service not installed. Aborting restore."
+  exit 1
 fi
 
-# NFS 관련 프로세스 시작
-/usr/sbin/nfsd restart
-/usr/sbin/statd restart
-/usr/sbin/lockd restart
+# Restore shares in dfstab or exports
+if [ -f "/etc/dfs/dfstab.bak" ]; then
+  cp "/etc/dfs/dfstab.bak" "/etc/dfs/dfstab"
+  echo "Shares restored in /etc/dfs/dfstab."
+elif [ -f "/etc/exports.bak" ]; then
+  cp "/etc/exports.bak" "/etc/exports"
+  echo "Shares restored in /etc/exports."
+else
+  echo "Shares backup file not found."
+fi
+
+# Start NFS services
+services=("nfsd" "statd" "mountd")
+
+for service in "${services[@]}"; do
+  service "$service" start
+  if [ $? -eq 0 ]; then
+    echo "$service started successfully."
+  else
+    echo "Failed to start $service."
+  fi
+done
+
+
 
 cat $result
 

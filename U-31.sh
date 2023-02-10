@@ -19,25 +19,9 @@ BAR
 
 
 
-# Backup files
-cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf.bak
-
-
-# 파일 경로 지정
-file="/etc/mail/sendmail.cf"
-
-# 주석을 제거할 라인 지정
-line="R$* $#error $@ 5.7.1 $: \"550 Relaying denied\""
-
-# 라인에서 주석을 제거
-sed -i "s/#//" $file
-
-# 라인이 수정되었는지 확인
-grep "$line" $file
-
-#
-sed -i '/#R/ s/#//' $file
-
+# Restore backup files
+cp /etc/mail/sendmail.cf.bak /etc/mail/sendmail.cf 
+ 
 
 
 cat $result

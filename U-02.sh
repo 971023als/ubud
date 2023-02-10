@@ -25,30 +25,11 @@ EOF
 
 BAR
 
+# Restore login.defs file
+cp /etc/login.defs.bak /etc/login.defs
 
-# Backup files
-cp /etc/login.defs /etc/login.defs.bak
-cp /etc/pam.d/system-auth /etc/pam.d/system-auth.bak
-
-
-# /etc/login.defs에서 최소 암호 길이 확인
-min_len_defs=$(grep "^PASS_MIN_LEN" /etc/login.defs | awk '{print $2}')
-if [ "$min_len_defs" -ge 8 ]; then
-  OK "/etc/login.defs의 최소 암호 길이가 $min_len_defs 로 설정됨"
-else
-  WARN "/etc/login.defs의 최소 암호 길이가 8보다 작음"
-fi
-
-# /etc/pam.d/system-auth에서 영어, 숫자 및 특수 문자 설정 확인
-min_len_pam=$(grep "pam_cracklib.so" /etc/pam.d/system-auth | grep "minlen" | awk -F"=" '{print $2}')
-if [ "$min_len_pam" -ge 8 ]; then
-  OK "/etc/pam.d/system-auth의 최소 암호 길이가 $min_len_pam으로 설정됨"
-else
-  WARN "/etc/pam.d/system-auth의 최소 암호 길이가 8보다 작습니다."
-fi
-
-
- 
+# Restore system-auth file
+cp /etc/pam.d/system-auth.bak /etc/pam.d/system-auth
 
 cat $result
 

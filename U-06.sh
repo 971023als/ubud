@@ -20,29 +20,24 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# 백업 디렉토리 설정
+
 backup_dir="./backup_nouser_nogroup"
 
-# 백업 디렉토리(존재하지 않는 경우) 생성
-if [ ! -d "$backup_dir" ]; then
-  mkdir "$backup_dir"
+# 백업 디렉터리가 있는지 확인
+if [ -d "$backup_dir" ]; then
+  # 백업된 파일을 original location로 복사
+  for file in $(find "$backup_dir" -type f); do
+    original_file="$(echo "$file" | sed "s|$backup_dir||")"
+    cp -R "$file" "$original_file"
+  done
+
+  # 백업 디렉터리 제거
+  rm -rf "$backup_dir"
+
+  echo "Files have been recovered and backup directory has been deleted."
+else
+  echo "Backup directory not found. No recovery possible."
 fi
-
-# "사용자"가 소유한 파일 찾기 및 백업
-for file in $(find / -nouser -print); do
-  cp -R "$file" "$backup_dir"
-  rm -rf "$file"
-done
-
-# "no group"이 소유한 파일 찾기 및 백업
-for file in $(find / -nogroup -print); do
-  cp -R "$file" "$backup_dir"
-  rm -rf "$file"
-done
-
-echo "Files owned by 'nouser' and 'nogroup' have been backed up and deleted."
-
-
 
 cat $result
 

@@ -16,14 +16,9 @@ EOF
 
 BAR
 
-# Backup files
-cp /etc/xinetd.conf /etc/xinetd.conf.bak
+# Restore system-auth file
+cp xinetd.conf.bak xinetd.conf
 
-# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
-sudo chown root:root /etc/xinetd.conf
-
-# 파일의 권한을 600으로 설정
-sudo chmod 600 /etc/xinetd.conf
 
 cat $result
 

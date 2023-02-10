@@ -3,6 +3,7 @@
  
 
 . function.sh
+
  
 
 BAR
@@ -19,26 +20,21 @@ EOF
 
 BAR
 
-
 TMP1=`SCRIPTNAME`.log
 
-> $TMP1 
+> $TMP1   
 
-
-
-# Start the vsftpd service:
+# Start the vsftpd service
 sudo service vsftpd start
 
-# Enable vsftpd service startup
+# Enable vsftpd service startup on boot
 sudo /etc/rc.d/init.d/vsftpd start
 
-# Start the proftp service:
+# Start the proftp service
 sudo service proftp start
 
-# Enable start of proftp
+# Enable proftp service startup on boot
 sudo /etc/rc.d/init.d/proftp start
-
-
 
 cat $result
 

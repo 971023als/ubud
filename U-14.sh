@@ -21,23 +21,11 @@ EOF
 BAR
 
 
-# Backup files
-cp $HOME/.bashrc $HOME/.bashrc.bak
-cp $HOME/.bash_profile $HOME/.bash_profile.bak
-cp $HOME/.bash_aliases $HOME/.bash_aliases.bak
+# Restore system-auth file
+cp $HOME/.bashrc.bak $HOME/.bashrc
+cp $HOME/.bash_profile.bak $HOME/.bash_profile
+cp $HOME/.bash_aliases.bak $HOME/.bash_aliases
 
-files=( "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.bash_aliases" )
-
-for file in "${files[@]}"; do
-  if [ -e "$file" ]; then
-    chmod o-w "$file"
-    if [ $? -eq 0 ]; then
-      OK "$file 에서 다른 사용자에 대한 쓰기 권한이 제거되었습니다."
-    else
-      WARN "$file 에서 다른 사용자에 대한 쓰기 권한을 제거하지 못했습니다."
-    fi
-  fi
-done
 
 
 
