@@ -20,26 +20,47 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Backup files
-cp /etc/crontab /etc/crontab.bak
-cp /etc/cron.hourly /etc/cron.hourly.bak 
-cp /etc/cron.daily /etc/cron.daily.bak
-cp /etc/cron.weekly /etc/cron.weekly.bak 
-cp /etc/cron.monthly /etc/cron.monthly.bak 
-cp /etc/cron.allow /etc/cron.allow.bak 
-cp /etc/cron.deny /etc/cron.deny.bak 
-cp /var/spool/cron/* /var/spool/cron/*.bak
-#cp /var/spool/cron/crontabs/* /var/spool/cron/crontabs/*.bak
+sudo chown root:root /etc/crontab
+sudo chmod 644 /etc/crontab
 
+sudo chown root:root /etc/cron.hourly
+sudo chmod 755 /etc/cron.hourly
 
+sudo chown root:root /etc/cron.daily
+sudo chmod 755 /etc/cron.daily
 
-files=(/etc/crontab /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.allow /etc/cron.deny /var/spool/cron/ /var/spool/cron/crontabs/)
+sudo chown root:root /etc/cron.weekly
+sudo chmod 755 /etc/cron.weekly
 
-for file in "${files[@]}"
-do
-  chown root:root $file
-  chmod 640 $file
-done
+sudo chown root:root /etc/cron.monthly
+sudo chmod 755 /etc/cron.monthly
+
+sudo chown root:root /etc/cron.allow
+sudo chmod 644 /etc/cron.allow
+
+sudo chown root:root /etc/cron.deny
+sudo chmod 644 /etc/cron.deny
+
+sudo chown root:crontab /var/spool/cron*
+sudo chmod 770 /var/spool/cron*
+
+sudo chown root:crontab /var/spool/cron/crontabs/
+sudo chmod 700 /var/spool/cron/crontabs/
+
+# Check if the original state has been restored
+if [ $(stat -c "%a" /etc/crontab) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.hourly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.daily) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.weekly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.monthly) -eq 755 ] &&
+   [ $(stat -c "%a" /etc/cron.allow) -eq 644 ] &&
+   [ $(stat -c "%a" /etc/cron.deny) -eq 644 ] &&
+   [ $(stat -c "%a" /var/spool/cron*) -eq 770 ] &&
+   [ $(stat -c "%a" /var/spool/cron/crontabs/) -eq 700 ]; then
+   OK "Original state has been restored"
+else
+   WARN "Original state has not been restored"
+fi
 
 cat $result
 

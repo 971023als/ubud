@@ -40,8 +40,6 @@ for file in $(find / -nogroup -print); do
   rm -rf "$file"
 done
 
-echo "Files owned by 'nouser' and 'nogroup' have been backed up and deleted."
-
 
 
 cat $result

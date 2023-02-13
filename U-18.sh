@@ -21,16 +21,18 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# Backup files
-cp /etc/hosts.allow /etc/hosts.allow.bak
-cp /etc/hosts.deny /etc/hosts.deny.bak
+# Remove the line allowing connections from 192.168.0.1 on port 22 (SSH)
+sudo sed -i '/sshd: 192.168.0.1/d' /etc/hosts.allow
 
+# Remove the line denying connections from all other IP addresses on port 22 (SSH)
+sudo sed -i '/sshd: ALL/d' /etc/hosts.deny
 
-# 포트 22(SSH)에서 192.168.0.1로부터의 연결 허용
-echo "sshd: 192.168.0.1" >> /etc/hosts.allow # ex)sshd : 192.168.0.148, 192.168.0.6
-
-# 포트 22(SSH)의 다른 모든 IP 주소에서 연결 거부
-echo "sshd: ALL" >> /etc/hosts.deny # ex)ALL:ALL
+# Check if the restore was successful
+if [ ! -f /etc/hosts.allow ] || [ ! -f /etc/hosts.deny ]; then
+  OK "Successfully restored the original state of /etc/hosts.allow and /etc/hosts.deny"
+else
+  WARN "Restore failed"
+fi
 
 
 

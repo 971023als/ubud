@@ -18,25 +18,23 @@ EOF
 BAR
 
 
-# Backup files
-cp /bin/ping /bin/ping.bak
-cp /usr/bin/passwd /usr/bin/passwd.bak
-cp /usr/bin/sudo /usr/bin/sudo.bak
+# Restore original permissions for specified files
+restore_permissions() {
+filename=$1
+original_permission=$(stat -c "%a" "$filename")
+sudo chmod "$original_permission" "$filename"
+INFO "다음에 대한 원래 사용 권한 복원 $filename"
+}
 
-
-# 실행 파일의 경로 지정
-executables=("/bin/ping" "/usr/bin/passwd" "/usr/bin/sudo")
-# 파일이 있는지 확인합니다
-if [ ! -e $executables ]; then
-  INFO "$exec_file이 없습니다."
-fi
-
-# SUID 및 SGID 사용 권한 제거
-sudo chmod u-s $executables
-sudo chmod g-s $executables
-
-INFO "$executables 에서 제거된 SUID 및 SGID 권한."
-
+# Restore original permissions for all specified files
+restore_permissions .profile
+restore_permissions .kshrc
+restore_permissions .cshrc
+restore_permissions .bashrc
+restore_permissions .bash_profile
+restore_permissions .login
+restore_permissions .exrc
+restore_permissions .netrc
 
 
 

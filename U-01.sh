@@ -42,11 +42,11 @@ cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 # Modify the PermitRootLogin setting
 sed -i 's/#*PermitRootLogin .*/PermitRootLogin No/' /etc/ssh/sshd_config
 
-# Check if the modification was successful
+# 수정이 성공했는지 확인합니다
 if grep -q "PermitRootLogin No" /etc/ssh/sshd_config; then
-  echo "sshd_config modification successful"
+  OK "second_config 수정 성공"
 else
-  echo "sshd_config modification failed"
+  WARN "second_config 수정에 실패했습니다"
 fi
 
 

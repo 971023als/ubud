@@ -17,53 +17,38 @@ EOF
 BAR
 
 
-# Backup files
-cp /etc/xinetd.d/echo /etc/xinetd.d/echo.bak
-cp /etc/xinetd.d/discard /etc/xinetd.d/discard.bak
-cp /etc/xinetd.d/daytime /etc/xinetd.d/daytime.bak
-cp /etc/xinetd.d/chargen /etc/xinetd.d/chargen.bak
 
+# Check if echo service file exists and restore its original state
+if [ -f /etc/xinetd.d/echo ]; then
+    rm /etc/xinetd.d/echo
+    OK "echo service file has been restored."
+else
+    WARN "echo service file was not found."
+fi
 
+# Check if discard service file exists and restore its original state
+if [ -f /etc/xinetd.d/discard ]; then
+    rm /etc/xinetd.d/discard
+    OK "discard service file has been restored."
+else
+    WARN "discard service file was not found."
+fi
 
-# echo 파일 생성
-echo "service echo
-{
-disable = yes
-id = echo-stream
-type = internal
-wait = no
-socket_type = stream
-}" > /etc/xinetd.d/echo
+# Check if daytime service file exists and restore its original state
+if [ -f /etc/xinetd.d/daytime ]; then
+    rm /etc/xinetd.d/daytime
+    OK "daytime service file has been restored."
+else
+    WARN "daytime service file was not found."
+fi
 
-# discard 파일 생성
-echo "service discard
-{
-disable = yes
-id = echo-stream
-type = internal
-wait = no
-socket_type = stream
-}" > /etc/xinetd.d/discard
-
-# daytime 파일 생성
-echo "service daytime
-{
-disable = yes
-id = echo-stream
-type = internal
-wait = no
-socket_type = stream
-}" > /etc/xinetd.d/daytime
-
-# daytime 파일 생성
-echo "service chargen
-{
-disable = yes
-id = echo-stream
-type = internal
-wait = no
-socket_type = stream
-}" > /etc/xinetd.d/chargen
+# Check if chargen service file exists and restore its original state
+if [ -f /etc/xinetd.d/chargen ]; then
+    rm /etc/xinetd.d/chargen
+    OK "chargen service file has been restored."
+else
+    WARN "chargen service file was not found."
+fi
 
 
 cat $result

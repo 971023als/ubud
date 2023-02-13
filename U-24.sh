@@ -20,30 +20,29 @@ BAR
 cp /etc/dfs/dfstab /etc/dfs/dfstab.bak
 cp /etc/exports /etc/exports.bak
 
-# dfstab 파일이 있는지 확인합니다
-if [ -f "/etc/dfs/dfstab" ]; then
-  # dfstab에서 모든 공유 제거
-  > "/etc/dfs/dfstab"
-  OK "공유가 /etc/dfs/dfstab에서 제거되었습니다."
-elif [ -f "/etc/exports" ]; then
-  # 내보내기에서 모든 공유 제거
-  > "/etc/exports"
-  OK "공유가 /etc/exports에서 제거되었습니다."
+# dfstab 또는 내보내기에서 공유 복원
+if [ -f "/etc/dfs/dfstab.bak" ]; then
+  cp "/etc/dfs/dfstab.bak" "/etc/dfs/dfstab"
+  INFO "/etc/dfs/dfstab에서 복원된 공유"
+elif [ -f "/etc/exports.bak" ]; then
+  cp "/etc/exports.bak" "/etc/exports"
+  INFO "/etc/exports에서 복원된 공유."
 else
-  INFO "공유 파일을 찾을 수 없습니다."
+  INFO "공유 백업 파일을 찾을 수 없습니다."
 fi
 
+# Restore the NFS service
+sudo mv /etc/rc.d/rc2.d/_S60nfs /etc/rc.d/rc2.d/S60nfs
 
-services=("nfsd" "statd" "mountd")
+# Start the NFS processes
+/etc/init.d/nfs start
 
-for service in "${services[@]}"; do
-  service "$service" stop
-  if [ $? -eq 0 ]; then
-    OK "$서비스가 중지되었습니다."
-  else
-    INFO "$service를 중지할 수 없습니다."
-  fi
-done
+# Check if the NFS processes are running
+if ps -ef | egrep "nfs|statd|lockd" | awk '{print $2}' &> /dev/null; then
+  OK "NFS service restored successfully."
+else
+  WARN "NFS service could not be restored."
+fi
 
 
 

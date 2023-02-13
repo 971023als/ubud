@@ -16,46 +16,28 @@ EOF
 
 BAR
 
-# Backup files
-cp /etc/xinetd.d/rlogin /etc/xinetd.d/rlogin.bak
-cp /etc/xinetd.d/rsh /etc/xinetd.d/rsh.bak
-cp /etc/xinetd.d/rexec /etc/xinetd.d/rexec.bak
+# /etc/xinetd.d/rlogin 파일 복원
+if [ -f /etc/xinetd.d/rlogin.bak ]; then
+  sudo mv /etc/xinetd.d/rlogin.bak /etc/xinetd.d/rlogin
+else
+  INFO "/etc/xinetd.d/rlogin.bak을 찾을 수 없습니다."
+fi
 
-# /etc/xinetd.d/rlogin 파일 설정
-echo "service rlogin
-{
-        socket_type= stream 
-        wait= no 
-        user= nobody 
-        log_on_success+= USERID 
-        log_on_failure+= USERID 
-        server= /usr/sdin/in.fingerd 
-        disable= yes
-}" > /etc/xinetd.d/rlogin
+# /etc/xinetd.d/rsh 파일 복원
+if [ -f /etc/xinetd.d/rsh.bak ]; then
+  sudo mv /etc/xinetd.d/rsh.bak /etc/xinetd.d/rsh
+else
+  INFO "/etc/xinetd.d/rsh.bak을 찾을 수 없습니다."
+fi
 
-# /etc/xinetd.d/rsh 파일 설정
-echo "service rsh
-{
-        socket_type= stream 
-        wait= no 
-        user= nobody 
-        log_on_success+= USERID 
-        log_on_failure+= USERID 
-        server= /usr/sdin/in.fingerd 
-        disable= yes
-}" > /etc/xinetd.d/rsh
+# /etc/xinetd.d/exec 파일 복원
+if [ -f /etc/xinetd.d/rexec.bak ]; then
+  sudo mv /etc/xinetd.d/rexec.bak /etc/xinetd.d/rexec
+else
+  INFO "/etc/xinetd.d/exec.bak을 찾을 수 없습니다."
+fi
 
-# /etc/xinetd.d/rexec 파일 설정
-echo "service rexec
-{
-        socket_type= stream 
-        wait= no 
-        user= nobody 
-        log_on_success+= USERID 
-        log_on_failure+= USERID 
-        server= /usr/sdin/in.fingerd 
-        disable= yes
-}" > /etc/xinetd.d/rexec
+INFO "r 서비스가 원래 상태로 복구되었습니다."
 
 
 

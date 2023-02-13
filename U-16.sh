@@ -26,30 +26,25 @@ TMP1=`SCRIPTNAME`.log
 
 
 
-# Define the backup directory
-backup_dir="/dev_backup"
+# Function to restore the device files
+function restore_device_files() {
+  # Check if the device files still do not exist
+  if [ -f "/dev/file1" ] || [ -f "/dev/file2" ] || [ -f "/dev/file3" ]; then
+    # Restore the original device files
+    sudo cp -R /path/to/backup/device/files/. /dev/
+    # Check if the device files were restored
+    if [ -f "/dev/file1" ] && [ -f "/dev/file2" ] && [ -f "/dev/file3" ]; then
+      OK "The device files have been restored."
+    else
+      WARN "The device files could not be restored."
+    fi
+  else
+    INFO "The device files do not exist."
+  fi
+}
 
-# Remove the current /dev directory
-rm -rf /dev
-
-# Check if the removal was successful
-if [ $? -eq 0 ]; then
-  echo "/dev directory removed successfully"
-else
-  echo "/dev Directory Removal Failed"
-  exit 1
-fi
-
-# Copy the backup directory to /dev
-cp -R $backup_dir /dev
-
-# Check if the copy was successful
-if [ $? -eq 0 ]; then
-  echo "$backup_dir directory copied to /dev successfully"
-else
-  echo "$backup_dir Directory Copy Failed"
-  exit 1
-fi
+# Call the function to restore the device files
+restore_device_files
  
 cat $result
 
