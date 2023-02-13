@@ -20,24 +20,23 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-
-# Backup files
-cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
-
-# Apache 구성 파일 정의
-file="/etc/apache2/apache2.conf"
+# Defining Apache Configuration Files
+file="/etc/httpd/conf/httpd.conf"
 
 if [ -f "$file" ]; then
-  # "AllowOverrideNone"을 "AllowOverride AuthConfig"로 바꿉니다
-  sed -i 's/AllowOverride None/AllowOverride AuthConfig/g' $file
+# # Replace "AllowOverride AuthConfig" with "AllowOverride None"
+sed -i 's/AllowOverride AuthConfig/AllowOverride None/g' $file
 
-  # 변경 여부 확인
-  if grep -q "AllowOverride AuthConfig" $file; then
-    OK "AllowOverrideNone이 AllowOverrideAuthConfig로 대체."
-  else
-    WARN "AllowOverrideNone을 AllowOverrideAuthConfig로 대체 불가."
-  fi
+# Check for changes
+if grep -q "AllowOverride None" $file; then
+OK "AllowOverride AuthConfig was replaced with AllowOverride None."
+else
+WARN "AllowOverride AuthConfig could not be replaced with AllowOverride None."
 fi
+fi
+
+# Restart the httpd daemon to apply configuration changes
+sudo service httpd restart
 
 
 

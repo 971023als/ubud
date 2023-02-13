@@ -18,16 +18,15 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# Start the DNS service
+/usr/sbin/named
 
-# DNS 서비스의 PID 찾기
-PIDs=$(ps -ef | grep named | awk '{print $2}')
-
-# DNS 서비스 중지
-for PID in $PIDs; do
-    kill -9 $PID
-done
-
-
+# Check if the DNS service is running
+if ps -ef | grep named &> /dev/null; then
+  OK "DNS service has been successfully restored."
+else
+  WARN "DNS service has not been restored."
+fi
 
 
 cat $result

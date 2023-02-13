@@ -21,14 +21,15 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# Backup files
-cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
+# Restart Apache service
+sudo systemctl restart httpd
 
-# Apache 구성 파일 정의
-file="/etc/apache2/apache2.conf"
-
-# "Options Indexes"을 "Options"로 바꿉니다
-sed -i 's/Options Indexes/Options/g' $file
+# Check if Apache service is running
+if systemctl is-active --quiet httpd; then
+  OK "Apache service has been successfully restored."
+else
+  WARN "Apache service has not been restored."
+fi
 
 
 

@@ -16,27 +16,22 @@ EOF
 
 BAR
 
-
-
-
-# Backup files
-cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf.bak
-
-
-# 파일 경로 지정
+# Specify file path
 file="/etc/mail/sendmail.cf"
 
-# 주석을 제거할 라인 지정
+# Specify which lines to annotate
 line="R$* $#error $@ 5.7.1 $: \"550 Relaying denied\""
 
-# 라인에서 주석을 제거
-sed -i "s/#//" $file
+# Add annotations back to the lines
+sed -i "s/^R/$#R/" $file
 
-# 라인이 수정되었는지 확인
-grep "$line" $file
+# Verify that the line has been modified
+if grep "$line" $file; then
+  OK "The original state has not been recovered"
+else
+  WARN "The original state has been successfully recovered"
+fi
 
-#
-sed -i '/#R/ s/#//' $file
 
 
 

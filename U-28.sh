@@ -16,20 +16,43 @@ EOF
 
 BAR
 
+# Start ypserv service
 sudo service ypserv start
+
+# Enable ypserv service to start at boot time
 sudo update-rc.d ypserv enable
 
+# Start ypbind service
 sudo service ypbind start
+
+# Enable ypbind service to start at boot time
 sudo update-rc.d ypbind enable
 
+# Start ypxfrd service
 sudo service ypxfrd start
+
+# Enable ypxfrd service to start at boot time
 sudo update-rc.d ypxfrd enable
 
+# Start the rpc.yppasswdd service
 sudo service rpc.yppasswdd start
+
+# Enable the rpc.yppasswdd service at bootup
 sudo update-rc.d rpc.yppasswdd enable
 
+# Start the rpc.yupdated service
 sudo service rpc.ypupdated start
+
+# Enable the rpc.ypupdate service at bootup
 sudo update-rc.d rpc.ypupdated enable
+
+# Check if the NIS and NIS+ services are running
+status=$(service ypserv status | grep running)
+if [ "$status" == "running" ]; then
+  OK "NIS and NIS+ services are recovered and running."
+else
+  WARN "NIS and NIS+ services are not recovered."
+fi
 
 cat $result
 

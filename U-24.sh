@@ -16,10 +16,6 @@ EOF
 
 BAR
 
-# Backup NFS configuration files
-cp /etc/dfs/dfstab /etc/dfs/dfstab.bak
-cp /etc/exports /etc/exports.bak
-
 # dfstab 또는 내보내기에서 공유 복원
 if [ -f "/etc/dfs/dfstab.bak" ]; then
   cp "/etc/dfs/dfstab.bak" "/etc/dfs/dfstab"
