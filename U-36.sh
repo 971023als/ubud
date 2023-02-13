@@ -21,8 +21,17 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-# Restore backup files
-cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
+# Backup files
+cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
+
+# [Apache_home], [username] 및 [groupname]을(를) 적절한 값으로 바꿈
+APACHE_CONF_FILE=/etc/apache2/apache2.conf
+USERNAME=user
+GROUPNAME=user
+
+# 사용자 및 그룹 행을 새 값으로 바꿈
+sed -i "s/User.*/User $USERNAME/g" $APACHE_CONF_FILE
+sed -i "s/Group.*/Group $GROUPNAME/g" $APACHE_CONF_FILE
 
 
 cat $result

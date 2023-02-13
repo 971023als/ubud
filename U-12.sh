@@ -18,9 +18,15 @@ EOF
 
 BAR
 
-# Restore system-auth file
-cp /etc/services.bak /etc/services
 
+# Backup files
+cp /etc/services /etc/services.bak
+
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/services
+
+# 파일의 권한을 644로 설정
+sudo chmod 644 /etc/services
 
 
 cat $result

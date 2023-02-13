@@ -24,7 +24,34 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-cp /etc/rsyslog.conf.bak /etc/rsyslog.conf
+
+filename="/etc/rsyslog.conf"
+
+if [ ! -e "$filename" ]; then
+  INFO "$filename 가 존재하지 않습니다"
+fi
+
+# Make a backup of the file
+sudo cp "$filename" "$filename".bak
+
+expected_content=(
+  "*.info;mail.none;authpriv.none;cron.none /var/log/messages"
+  "authpriv.* /var/log/secure"
+  "mail.* /var/log/maillog"
+  "cron.* /var/log/cron"
+  "*.alert /dev/console"
+  "*.emerg *"
+)
+
+for content in "${expected_content[@]}"; do
+  if ! grep -q "$content" "$filename"; then
+    echo "$content" >> "$filename"
+  fi
+done
+
+INFO "콘텐츠가 $filename 에 추가되었습니다."
+
+
 
 
 

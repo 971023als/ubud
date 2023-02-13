@@ -32,6 +32,9 @@ sudo cp "$backup_file" /etc/login.defs
 
 echo "Original file restored from $backup_file"
 
+echo "PASS_MIN_DAYS 7" > /etc/login.defs
+ 
+
 cat $result
 
 echo ; echo

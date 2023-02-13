@@ -18,9 +18,14 @@ EOF
 
 BAR
 
-# Restore system-auth file
-cp xinetd.conf.bak xinetd.conf
+# Backup files
+cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/rsyslog.conf
+
+# 파일의 권한을 640으로 설정
+sudo chmod 640 /etc/rsyslog.conf
 
 cat $result
 

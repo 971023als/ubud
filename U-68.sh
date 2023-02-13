@@ -27,11 +27,22 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-sudo cp /etc/motd.bak /etc/motd
-sudo cp /etc/issue.net.bak /etc/issue.net
-sudo cp /etc/vsftpd/vsftpd.conf.bak /etc/vsftpd/vsftpd.conf
-sudo cp /etc/mail/sendmail.cf.bak /etc/mail/sendmail.cf
-sudo cp /etc/named.conf.bak /etc/named.conf
+sudo cp /etc/motd /etc/motd.bak
+sudo cp /etc/issue.net /etc/issue.net.bak
+sudo cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+sudo cp /etc/mail/sendmail.cf /etc/mail/sendmail.cf.bak
+sudo cp /etc/named.conf /etc/named.conf.bak
+
+files=("/etc/motd" "/etc/issue.net" "/etc/vsftpd/vsftpd.conf" "/etc/mail/sendmail.cf" "/etc/named.conf")
+
+for file in "${files[@]}"; do
+  if [ ! -e "$file" ]; then
+    INFO "$file이 존재하지 않습니다."
+  else
+    OK "$file이 존재합니다."
+  fi
+done
+
 
 
 cat $result

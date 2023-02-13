@@ -18,7 +18,6 @@ cat << EOF >> $result
 
 EOF
 
-
 BAR
 
 
@@ -26,7 +25,12 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-sudo cp /etc/exports.bak /etc/exports
+sudo cp /etc/exports /etc/exports.bak
+
+filename="/etc/exports"
+
+sudo chown root "$filename"
+sudo chmod 644 "$filename"
 
 
 cat $result

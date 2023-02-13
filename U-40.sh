@@ -20,23 +20,27 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+# Create a backup of apache2.conf
+sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
 
-# Check if a backup file exists
-if [ -f /etc/apache2/apache2.conf.bak ]; then
-  # Restore the backup file
-  sudo cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
-else
-  echo "Backup file not found. Please create a backup before running this script."
-  exit 1
-fi
 
-# Restart Apache to apply the changes
+#@@@@@파일크기 5000000으로 할지 아래처럼 할지 확인
+
+# 파일 크기 제한 설정(바이트)
+limit=1048576
+
+# 모든 집합 디렉토리에 LimitRequestBody 지시어 추가
+# R[Directory_Path]를 실제 디렉토리 경로로 바꿉니다
+echo "
+<Directory [Directory_Path]>
+    LimitRequestBody $limit
+</Directory>" >> /etc/apache2/apache2.conf
+
+# 변경 내용을 적용하려면 파일을 저장하고 Apache를 다시 시작
 if ! sudo service apache2 restart; then
-  echo "Apache could not be restarted. Please check the logs for more information."
-  exit 1
+  INFO "Apache를 다시 시작 불가합니다. 상태 및 로그를 확인하는 중입니다..."
 fi
 
-echo "Apache configuration restored successfully."
 
 
 

@@ -17,13 +17,53 @@ EOF
 BAR
 
 
-# Restore backup files
-cp /etc/xinetd.d/echo.bak /etc/xinetd.d/echo
-cp /etc/xinetd.d/discard.bak /etc/xinetd.d/discard
-cp /etc/xinetd.d/daytime.bak /etc/xinetd.d/daytime
-cp /etc/xinetd.d/chargen.bak /etc/xinetd.d/chargen
+# Backup files
+cp /etc/xinetd.d/echo /etc/xinetd.d/echo.bak
+cp /etc/xinetd.d/discard /etc/xinetd.d/discard.bak
+cp /etc/xinetd.d/daytime /etc/xinetd.d/daytime.bak
+cp /etc/xinetd.d/chargen /etc/xinetd.d/chargen.bak
 
 
+
+# echo 파일 생성
+echo "service echo
+{
+disable = yes
+id = echo-stream
+type = internal
+wait = no
+socket_type = stream
+}" > /etc/xinetd.d/echo
+
+# discard 파일 생성
+echo "service discard
+{
+disable = yes
+id = echo-stream
+type = internal
+wait = no
+socket_type = stream
+}" > /etc/xinetd.d/discard
+
+# daytime 파일 생성
+echo "service daytime
+{
+disable = yes
+id = echo-stream
+type = internal
+wait = no
+socket_type = stream
+}" > /etc/xinetd.d/daytime
+
+# daytime 파일 생성
+echo "service chargen
+{
+disable = yes
+id = echo-stream
+type = internal
+wait = no
+socket_type = stream
+}" > /etc/xinetd.d/chargen
 
 
 cat $result

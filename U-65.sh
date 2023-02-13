@@ -25,10 +25,17 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1 
 
 
-sudo cp /usr/bin/at.bak /usr/bin/at
+# Backup the /usr/bin/at file
+sudo cp /usr/bin/at /usr/bin/at.bak
 
-sudo cp /etc/at.deny.bak /etc/at.deny
+# Backup the /etc/at.deny file
+sudo cp /etc/at.deny /etc/at.deny.bak
 
+sudo chmod 4750 /usr/bin/at
+
+sudo chown root /etc/at.deny
+
+sudo chmod 640 /etc/at.deny
 
 cat $result
 

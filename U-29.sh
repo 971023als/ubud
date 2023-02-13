@@ -17,10 +17,49 @@ EOF
 BAR
 
 
-# Restore backup files
-cp /etc/xinetd.d/tftp.bak /etc/xinetd.d/tftp
-cp /etc/xinetd.d/talk.bak /etc/xinetd.d/talk
-cp /etc/xinetd.d/ntalk.bak /etc/xinetd.d/ntalk
+
+# Backup files
+cp /etc/xinetd.d/tftp /etc/xinetd.d/tftp.bak
+cp /etc/xinetd.d/talk /etc/xinetd.d/talk.bak
+cp /etc/xinetd.d/ntalk /etc/xinetd.d/ntalk.bak
+
+
+
+# tftp 파일 생성
+echo "service tftp
+{
+socket_type = dgram
+protocol = udp
+wait = yes
+user = root
+server = /usr/sbin/in.tftpd
+server_args = -s /tftpboot
+disable = yes
+}" > /etc/xinetd.d/tftp
+
+# talk 파일 생성
+echo "service tftp
+{
+socket_type = dgram
+protocol = udp
+wait = yes
+user = root
+server = /usr/sbin/in.tftpd
+server_args = -s /tftpboot
+disable = yes
+}" > /etc/xinetd.d/talk
+
+# ntalk 파일 생성
+echo "service tftp
+{
+socket_type = dgram
+protocol = udp
+wait = yes
+user = root
+server = /usr/sbin/in.tftpd
+server_args = -s /tftpboot
+disable = yes
+}" > /etc/xinetd.d/ntalk
 
 
 cat $result

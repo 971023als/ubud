@@ -24,17 +24,32 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Find files in /dev directory without major or minor number
-find /dev -type f -exec ls -l {} \; | awk '$5 == "0" && $6 == "0" {print $9}' |
-while read file; do
-    # Confirm before deleting
-    read -p "Delete $file? [y/n] " confirm
-    if [ "$confirm" == "y" ]; then
-        rm -f "$file"
-    fi
-done
- 
 
+
+# Define the backup directory
+backup_dir="/dev_backup"
+
+# Remove the current /dev directory
+rm -rf /dev
+
+# Check if the removal was successful
+if [ $? -eq 0 ]; then
+  echo "/dev directory removed successfully"
+else
+  echo "/dev Directory Removal Failed"
+  exit 1
+fi
+
+# Copy the backup directory to /dev
+cp -R $backup_dir /dev
+
+# Check if the copy was successful
+if [ $? -eq 0 ]; then
+  echo "$backup_dir directory copied to /dev successfully"
+else
+  echo "$backup_dir Directory Copy Failed"
+  exit 1
+fi
  
 cat $result
 

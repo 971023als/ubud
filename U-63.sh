@@ -26,7 +26,13 @@ TMP1=`SCRIPTNAME`.log
 
 
 # Restore backup files
-cp /etc/vsftpd/ftpusers.bak /etc/vsftpd/ftpusers
+cp /etc/vsftpd/ftpusers /etc/vsftpd/ftpusers.bak
+
+# 파일의 소유자를 루트로 변경
+sudo chown root:root /etc/vsftpd/ftpusers
+
+# 파일 권한을 640으로 변경
+sudo chmod 640 /etc/vsftpd/ftpusers
 
 
 

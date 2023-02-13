@@ -20,16 +20,26 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Restore backup files
-cp /etc/crontab.bak /etc/crontab
-cp /etc/cron.hourly.bak /etc/cron.hourly
-cp /etc/cron.daily.bak /etc/cron.daily
-cp /etc/cron.weekly.bak /etc/cron.weekly
-cp /etc/cron.monthly.bak /etc/cron.monthly
-cp /etc/cron.allow.bak /etc/cron.allow
-cp /etc/cron.deny.bak /etc/cron.deny
-cp /var/spool/cron/*.bak /var/spool/cron/*
-#cp /var/spool/cron/crontabs/*.bak /var/spool/cron/crontabs/*
+# Backup files
+cp /etc/crontab /etc/crontab.bak
+cp /etc/cron.hourly /etc/cron.hourly.bak 
+cp /etc/cron.daily /etc/cron.daily.bak
+cp /etc/cron.weekly /etc/cron.weekly.bak 
+cp /etc/cron.monthly /etc/cron.monthly.bak 
+cp /etc/cron.allow /etc/cron.allow.bak 
+cp /etc/cron.deny /etc/cron.deny.bak 
+cp /var/spool/cron/* /var/spool/cron/*.bak
+#cp /var/spool/cron/crontabs/* /var/spool/cron/crontabs/*.bak
+
+
+
+files=(/etc/crontab /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly /etc/cron.allow /etc/cron.deny /var/spool/cron/ /var/spool/cron/crontabs/)
+
+for file in "${files[@]}"
+do
+  chown root:root $file
+  chmod 640 $file
+done
 
 cat $result
 

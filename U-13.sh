@@ -18,11 +18,24 @@ EOF
 BAR
 
 
-# Restore system-auth file
-cp /bin/ping.bak /bin/ping 
-cp /usr/bin/passwd.bak /usr/bin/passwd 
-cp /usr/bin/sudo.bak /usr/bin/sudo 
+# Backup files
+cp /bin/ping /bin/ping.bak
+cp /usr/bin/passwd /usr/bin/passwd.bak
+cp /usr/bin/sudo /usr/bin/sudo.bak
 
+
+# 실행 파일의 경로 지정
+executables=("/bin/ping" "/usr/bin/passwd" "/usr/bin/sudo")
+# 파일이 있는지 확인합니다
+if [ ! -e $executables ]; then
+  INFO "$exec_file이 없습니다."
+fi
+
+# SUID 및 SGID 사용 권한 제거
+sudo chmod u-s $executables
+sudo chmod g-s $executables
+
+INFO "$executables 에서 제거된 SUID 및 SGID 권한."
 
 
 

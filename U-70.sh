@@ -20,11 +20,14 @@ EOF
 
 BAR
 
-# 송신 메일 초기화 스크립트 복원
-mv /etc/rc2.d/S88sendmail_bak /etc/rc2.d/S88sendmail
+# 송신 메일 프로세스의 PID 가져오기
+pid=$(ps -ef | grep sendmail | awk '{print $2}')
 
-# 메일 보내기 서비스 시작
-service sendmail restart   
+# PID를 사용하여 송신 메일 프로세스 중지
+kill -9 $pid
+
+# /etc/rc2.d에서 sendmail init 스크립트 이동
+mv /etc/rc2.d/S88sendmail /etc/rc2.d/S88sendmail_bak    
 
 cat $result
 

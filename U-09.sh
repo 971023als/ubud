@@ -20,9 +20,14 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Restore system-auth file
-cp /etc/hosts.bak /etc/hosts
+# Backup files
+cp /etc/hosts /etc/hosts.bak
 
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/hosts
+
+# 파일의 권한을 600으로 설정
+sudo chmod 600 /etc/hosts
 
 
 cat $result

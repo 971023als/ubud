@@ -16,9 +16,14 @@ EOF
 
 BAR
 
-# Restore system-auth file
-cp /etc/shadow.bak /etc/shadow 
+# Backup files
+cp /etc/shadow /etc/shadow.bak
 
+# 파일 소유자를 "root" 사용자와 "root" 그룹으로 변경
+sudo chown root:root /etc/shadow
+
+# 파일의 권한을 400으로 설정
+sudo chmod 400 /etc/shadow
 
 cat $result
 

@@ -17,9 +17,18 @@ EOF
 BAR
 
 
-# Restore backup files
-cp /etc/xinetd.d/finger.bak /etc/xinetd.d/finger
+# Backup files
+cp /etc/xinetd.d/finger /etc/xinetd.d/finger.bak
 
+# finger 파일 생성
+echo "service finger
+{
+socket_type = stream
+wait = no
+user = nobody
+server = /usr/sbin/in.fingerd
+disable = yes
+}" > /etc/xinetd.d/finger
 
 
 

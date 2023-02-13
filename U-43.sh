@@ -20,23 +20,35 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-# Get the latest backup of the sulog file
-sulog_backup=$(ls -t /var/log/sulog_* | head -n 1)
+# 현재 날짜 및 시간 저장
+current_date_time=$(date +"%Y-%m-%d %T")
 
-# Recover the sulog file from its backup
-cp $sulog_backup /var/log/sulog
+# su를 사용한 사용자의 사용자 이름 가져오기
+username=$(last | awk '/su/ {print $1}')
 
-# Get the latest backup of the auth.log file
-auth_backup=$(ls -t /var/log/auth_* | head -n 1)
+# sulog 파일에 로그 추가
+echo "$current_date_time $username used su" >> /var/log/sulog
 
-# Recover the auth.log file from its backup
-cp $auth_backup /var/log/auth.log
 
-# Get the latest backup of the auth_logs file
-auth_logs_backup=$(ls -t /var/log/auth_logs_* | head -n 1)
+# 반복적인 로그인 실패에 대한 임계값 설정
+threshold=5
 
-# Recover the auth_logs file from its backup
-cp $auth_logs_backup /var/log/auth_logs
+# 로그 파일에서 반복되는 로그인 실패 횟수를 가져옵니다
+count=$(grep -c "Failed password" /var/log/auth.log)
+
+echo "Threshold of $threshold repeated login failures reached. Total failures: $count" >> /var/log/auth.log
+
+
+# 로그인 거부 이벤트에서 사용자 이름 가져오기
+username=$(grep "authentication failure" /var/log/auth.log | tail -n 1 | awk '{print $(NF-5)}')
+
+# 현재 날짜 및 시간 저장
+current_date_time=$(date +"%Y-%m-%d %T")
+
+# auth_logs 파일에 로그 저장
+echo "$current_date_time Login rejection for user $username" >> /var/log/auth_logs
+
+
 
 cat $result
 

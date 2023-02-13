@@ -25,7 +25,7 @@ TMP1=`SCRIPTNAME`.log
 > $TMP1
 
 # Restore backup files
-cp /etc/profile.bak /etc/profile
+cp /etc/profile /etc/profile.bak
 
 # /etc/profile에 UMASK 추가(존재하지 않는 경우)
 if ! grep -q "UMASK=022" /etc/profile; then

@@ -21,9 +21,14 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
+# Backup files
+cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf.bak
 
-# Restore backup files
-cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
+# Apache 구성 파일 정의
+file="/etc/apache2/apache2.conf"
+
+# "Options Indexes"을 "Options"로 바꿉니다
+sed -i 's/Options Indexes/Options/g' $file
 
 
 
