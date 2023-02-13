@@ -11,32 +11,30 @@ BAR
 CODE [U-65] at 파일 소유자 및 권한 설정
 
 cat << EOF >> $result
-
 [양호]: at 접근제어 파일의 소유자가 root이고, 권한이 640 이하인 경우
-
 [취약]: at 접근제어 파일의 소유자가 root가 아니거나, 권한이 640 이하가 아닌 경우
-
 EOF
 
 BAR
 
 TMP1=`SCRIPTNAME`.log
 
-> $TMP1 
+> $TMP1
 
+# Restore original permissions for /usr/bin/at
+chmod 755 /usr/bin/at
 
-# Backup the /usr/bin/at file
-sudo cp /usr/bin/at /usr/bin/at.bak
+# Restore original owner and permissions for /etc/at.deny
+chown root:root /etc/at.deny
+chmod 644 /etc/at.deny
 
-# Backup the /etc/at.deny file
-sudo cp /etc/at.deny /etc/at.deny.bak
-
-sudo chmod 4750 /usr/bin/at
-
-sudo chown root /etc/at.deny
-
-sudo chmod 640 /etc/at.deny
+# Check if restoration was successful
+if [[ "$(stat -c %a /usr/bin/at)" == "755" && "$(stat -c %U /usr/bin/at)" == "root" && "$(stat -c %a /etc/at.deny)" == "644" && "$(stat -c %U /etc/at.deny)" == "root" ]]; then
+  OK "Restoration was successful."
+else
+  WARN "Restoration was not successful."
+fi
 
 cat $result
 
-echo ; echo 
+echo ; echo

@@ -1,20 +1,16 @@
 #!/bin/bash
 
- 
 
 . function.sh
- 
+
 
 BAR
 
 CODE [U-71] Apache 웹서비스 정보 숨김
 
 cat << EOF >> $result
-
 [양호]: ServerTokens Prod, ServerSignature Off로 설정되어있는 경우
-
 [취약]: ServerTokens Prod, ServerSignature Off로 설정되어있지 않은 경우
-
 EOF
 
 BAR
@@ -24,37 +20,40 @@ TMP1=`SCRIPTNAME`.log
 
 > $TMP1 
 
-filename="/etc/apache2/apache2.conf"
+TMP2=`SCRIPTNAME`_backup.log
 
-# 파일이 있는지 확인하십시오
-if [ ! -e "$filename" ]; then
-  INFO "$filename does not exist"
+cp "$filename" "$TMP2"
+
+if [ -e "$TMP2" ]; then
+  OK "Backup is successful: $TMP2"
+else
+  WARN "Backup failed."
 fi
 
-# 파일을 백업합니다
-sudo cp "$filename" "$filename".bak
+# Replace "ServerTokens Prod" with "ServerTokens Full" in apache2.conf file
+sed -i 's/ServerTokens Prod/ServerTokens Full/g' "$filename"
 
-#  apache2.conf 파일에서 "ServerTokens Full"을 "ServerTokens Prod"로 바꿉니다
-sudo sed -i 's/ServerTokens Full/ServerTokens Prod/g' "$filename"
+# Replace "ServerSignatureOff" with "ServerSignatureOn" in the apache2.conf file
+sed -i 's/ServerSignature Off/ServerSignature On/g' "$filename"
 
-# apache2.conf 파일에서 "ServerSignatureOn"을 "ServerSignatureOff"로 바꿉니다
-sudo sed -i 's/ServerSignature On/ServerSignature Off/g' "$filename"
-
-# ServerTokens가 설정되어 있는지 확인합니다
-if ! grep -q "ServerTokens Prod" "$filename"; then
-  echo "ServerTokens Prod" >> "$filename"
+# Verify that Server Tokens is set to "Full"
+if ! grep -q "ServerTokens Full" "$filename"; then
+echo "ServerTokens Full" >> "$filename"
 fi
 
-# ServerSignature가 설정되어 있는지 확인합니다
-if ! grep -q "ServerSignature Off" "$filename"; then
-  echo "ServerSignature Off" >> "$filename"
+# Verify that Server Signature is set to "On"
+if ! grep -q "ServerSignature On" "$filename"; then
+echo "ServerSignature On" >> "$filename"
 fi
 
-# Apache를 재시작하여 변경 사항 적용
-sudo systemctl restart apache2s
+if cmp -s "$filename" "$TMP2"; then
+  OK "Recovery is successful."
+else
+  WARN "Recovery failed."
+fi
 
-INFO "Server Tokens and Server Signature successfully set in $filename."
+
 
 cat $result
 
-echo ; echo 
+echo ; echo

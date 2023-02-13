@@ -7,36 +7,31 @@ BAR
 CODE [U-44] root 이외의 UID가 ‘0’ 금지
 
 cat << EOF >> $result
-
 [양호]: root 계정과 동일한 UID를 갖는 계정이 존재하지 않는 경우
-
 [취약]: root 계정과 동일한 UID를 갖는 계정이 존재하는 경우
-
 EOF
 
 BAR
 
-# Save Current Date and Time
-current_date_time=$(date +"%Y-%m-%d %T")
+TMP1=`SCRIPTNAME`.log
 
-# Make a backup of the /etc/passwd file
-cp /etc/passwd /etc/passwd_$current_date_time
+>$TMP1 
 
-# Gets the user name of an account with the same UID as the root account
+# Check if the UID of an account is changed
 username=$(awk -F: '$3==0{print $1}' /etc/passwd)
 
 if [ -n "$username" ]; then
-  # UID Array
-  uids=(2023 2024 2025)
+  # Restore the original UID of an account
+  usermod -u 0 $username
 
-  for uid in "${uids[@]}"; do
-    # Change the UID of an account
-    sudo usermod -u $uid $username
-  done
+  if [ $? -eq 0 ]; then
+    OK "The original state has been restored successfully."
+  else
+    WARN "The original state could not be restored."
+  fi
 else
-  OK "An account with the same UID as the root account cannot be found"
+  INFO "An account with the same UID as the root account cannot be found."
 fi
-
 
 cat $result
 

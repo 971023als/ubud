@@ -1,52 +1,57 @@
 #!/bin/bash
 
- 
-
 . function.sh
-
- 
-
- 
 
 BAR
 
 CODE [U-59] 숨겨진 파일 및 디렉터리 검색 및 제거
 
 cat << EOF >> $result
-
 [양호]: 디렉터리 내 숨겨진 파일을 확인하여, 불필요한 파일 삭제를 완료한 경우
-
 [취약]: 디렉터리 내 숨겨진 파일을 확인하지 않고, 불필요한 파일을 방치한 경우
-
 EOF
 
 BAR
 
-# 숨김 파일 및 디렉토리 정의
-hidden_files=$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")
-hidden_dirs=$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")
+TMP1=`SCRIPTNAME`.log
 
-# 원치 않거나 의심스러운 파일이나 디렉토리가 있는지 확인
-for file in $hidden_files; do
-  if [[ $(basename $file) =~ "unwanted-file" ]]; then
-    echo "Found unwanted file: $file"
-     # 파일 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm $file
+> $TMP1 
+
+# Define a function to restore the original state
+function restore_state {
+  # Check if a backup of the hidden files and directories exists
+  if [ -f "hidden_files_backup.txt" ]; then
+    # Restore the hidden files
+    while read file; do
+      if [ ! -f "$file" ]; then
+        touch "$file"
+      fi
+    done < "hidden_files_backup.txt"
+
+    # Restore the hidden directories
+    while read dir; do
+      if [ ! -d "$dir" ]; then
+        mkdir "$dir"
+      fi
+    done < "hidden_dirs_backup.txt"
+
+    # Print that the original state was recovered
+    OK "The original state was recovered successfully."
+  else
+    # Print that the original state was not recovered
+    WARN "The original state could not be recovered because the backup files were not found."
   fi
-done
+}
 
-for dir in $hidden_dirs; do
-  if [[ $(basename $dir) =~ "suspicious-dir" ]]; then
-    echo "Found suspicious directory: $dir"
-    # 디렉터리 삭제 또는 알림 전송과 같은 원하는 작업을 수행합니다.
-    sudo rm -r $dir
-  fi
-done
-
+# Check if there was a problem while removing the hidden files and directories
+if [ ! -z "$(sudo find / -type f -name ".*" ! -path "/run/user/1000/gvfs/*")" ] || [ ! -z "$(sudo find / -type d -name ".*" ! -path "/run/user/1000/gvfs/*")" ]; then
+  # Restore the original state
+  restore_state
+else
+  INFO "No problem was detected while removing the hidden files and directories."
+fi
 
 
 cat $result
 
-echo ; echo 
-
- 
+echo ; echo
