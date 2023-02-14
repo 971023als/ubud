@@ -17,7 +17,7 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
-HTTPD_ROOT="/etc/httpd/conf/httpd.conf"
+HTTPD_ROOT="/etc/apache2/apache2.conf"
 UNWANTED_ITEMS="manual samples docs"
 
 for item in $UNWANTED_ITEMS

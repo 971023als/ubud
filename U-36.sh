@@ -18,7 +18,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Define the Apache Configuration File
-APACHE_CONF_FILE=/etc/httpd/conf/httpd.conf
+APACHE_CONF_FILE=/etc/apache2/apache2.conf
 
 # Get the original values of the User and Group rows
 ORIGINAL_USER=$(grep "User" $APACHE_CONF_FILE | awk '{print $2}')

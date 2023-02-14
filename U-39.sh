@@ -18,7 +18,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Defining Apache Configuration Files
-file="/etc/httpd/conf/httpd.conf"
+file="/etc/apache2/apache2.conf"
 
 # Check if the original state has been recovered
 if grep -q "Options FollowSymLinks" $file; then

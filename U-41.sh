@@ -17,8 +17,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+#    백업 파일 생성
+cp /etc/apache2/sites-available/000-default.conf.bak /etc/apache2/sites-available/000-default.conf
+
 # Define the Apache configuration file
-file="/etc/httpd/conf/httpd.conf"
+file="/etc/apache2/sites-available/000-default.conf"
 
 # Check if the DocumentRoot has been changed
 if grep -q "/home/ubuntu/newphp/" $file; then

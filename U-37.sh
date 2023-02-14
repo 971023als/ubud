@@ -18,7 +18,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # Defining Apache Configuration Files
-file="/etc/httpd/conf/httpd.conf"
+file="/etc/apache2/apache2.conf"
 
 if [ -f "$file" ]; then
 # # Replace "AllowOverride AuthConfig" with "AllowOverride None"

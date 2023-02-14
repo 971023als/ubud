@@ -17,8 +17,11 @@ TMP1=`SCRIPTNAME`.log
 
 >$TMP1  
 
+#    백업 파일 생성
+cp /etc/apache2/apache2.conf.bak /etc/apache2/apache2.conf
+
 # Define the Apache Configuration File
-file="/etc/httpd/conf/httpd.conf"
+file="/etc/apache2/apache2.conf"
 
 # Replace "Options" with "Options Indexes"
 sudo sed -i 's/Options/Options Indexes/g' $file
