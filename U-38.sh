@@ -53,4 +53,6 @@ else
   WARN "백업 디렉터리 $BACKUP_DIR이 없습니다."
 fi
 
+INFO "숨겨진 디렉토리 및 파일을 복구 완료"
+
 echo ; echo
