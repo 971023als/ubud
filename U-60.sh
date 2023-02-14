@@ -22,7 +22,7 @@ if [ ! -f /usr/sbin/sshd ]; then
 echo "SSH is not installed."
 
 # Uninstall SSH
-sudo yum remove ssh -y
+sudo apt remove ssh -y
 
 # Check if SSH has been successfully uninstalled
 if [ ! -f /usr/sbin/sshd ]; then
