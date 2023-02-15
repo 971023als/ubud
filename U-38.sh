@@ -21,7 +21,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 # 백업할 원본 파일 배열 설정
-files=("/etc/apache2/apache2.conf")
+files=("/etc/httpd/conf/httpd.conf")
 
 # 백업 디렉터리 설정
 # backup_dir="/backup"
@@ -50,7 +50,7 @@ done
 
 
 # 원본 파일 배열 설정
-files=("/etc/apache2/apache2.conf")
+files=("/etc/httpd/conf/httpd.conf")
 
 # 백업 디렉터리 설정
 # backup_dir="/backup"
@@ -77,5 +77,7 @@ for file in "${files[@]}"; do
     INFO "$file 을 찾을 수 없습니다"
     fi
 done
+
+cat $result
 
 echo ; echo
