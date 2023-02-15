@@ -21,7 +21,7 @@ TMP1=`SCRIPTNAME`.log
 >$TMP1  
 
 
-ACKUP_DIR="/backup_httpd/"
+ACKUP_DIR="/backend/"
 BACKUP_FILE="apache_backup.tar.gz"
 HTTPD_ROOT="/etc/apache2/"
 
@@ -37,7 +37,7 @@ fi
 
 #--------------------------------------------------------------
 
-BACKUP_DIR="/backup_httpd/"
+BACKUP_DIR="/backend/"
 BACKUP_FILE="apache_backup.tar.gz"
 HTTPD_ROOT="/etc/apache2/"
 
