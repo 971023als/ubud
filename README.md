@@ -1,19 +1,20 @@
-# Ubuntu Vulnerability Auto-Remediation Script (Ubud)
+# 우분투 취약점 자동 조치 스크립트 (Ubud)
 
-## Overview
-Ubud is an automated tool designed to address vulnerabilities in Ubuntu configuration files. Developed as part of a security project from January to February 2023, this script facilitates the diagnosis, remediation, and verification of security issues in critical communication infrastructure based on established vulnerability guidelines.
+## 개요
+Ubud는 우분투 설정 파일의 취약점을 해결하기 위해 개발된 자동화 도구입니다. 2023년 1월부터 2월까지 보안 프로젝트의 일환으로 개발된 이 스크립트는 기존의 취약점 가이드라인에 기반하여 주요 통신 기반시설의 보안 문제를 진단, 조치, 검증하는 데 도움을 줍니다.
 
-## Features
-- **Automated Diagnosis**: Quickly identifies vulnerabilities in Linux configuration files.
-- **Remediation and Recovery**: Implements fixes and provides scripts to revert changes if necessary.
-- **Guideline Compliance**: Aligns with key communication infrastructure vulnerability guidelines for improved security.
+## 기능
+- **자동 진단**: 리눅스 설정 파일의 취약점을 빠르게 식별합니다.
+- **조치 및 복구**: 문제를 해결하고 필요시 변경 사항을 되돌릴 수 있는 스크립트를 제공합니다.
+- **가이드라인 준수**: 주요 통신 기반시설의 취약점 가이드라인에 부합하여 보안을 개선합니다.
 
-## Getting Started
-### Prerequisites
-- Ubuntu 18.04 LTS or newer
-- Sudo privileges
+## 시작하기
+### 필요 조건
+- 우분투 18.04 LTS 이상
+- 슈도(sudo) 권한
 
-### Installation
-1. Clone the repository:
+### 설치 방법
+1. 저장소를 복제합니다:
    ```bash
    git clone https://github.com/971023als/ubud.git
+
